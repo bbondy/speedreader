@@ -1,0 +1,5 @@
+dist/
+wasm/target/
+wasm/pkg/
+wasm/vendor-readability/
+**/.DS_Store

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="fonts/atkinson-hyperligible.css">
+  <link rel="stylesheet" href="fonts/opendyslexic.css">
+  <link rel="stylesheet" href="reader.css">
+  <link rel="stylesheet" href="toolbar.css">
+  <style>
+    /* Clear the 48px toolbar and trim Brave's generous top padding so the
+       title sits just below the bar instead of after a big empty header. */
+    html.sr-has-toolbar body { padding-top: 48px !important; }
+    html.sr-has-toolbar #article { padding-top: 24px !important; }
+  </style>
+  <title>SpeedReader</title>
+</head>
+<body>
+  <!-- Distillation is done by Brave's Rust distiller compiled to WASM (vendor/wasm),
+       loaded on demand from reader.js. -->
+  <script src="reader.js"></script>
+</body>
+</html>

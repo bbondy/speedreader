@@ -1,0 +1,212 @@
+/* SpeedReader toolbar — recreates Brave's native SpeedReader toolbar layout,
+ * but (since it lives in the reader page, not browser chrome) it follows the
+ * active article theme via the CSS variables reader.css sets on <html>. */
+
+#speedreader-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2147483647;
+
+  height: 48px;
+  background-color: var(--article-background-color, #fff);
+  border-bottom: 1px solid var(--vertical-delemiter-color, #e2e3e7);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+
+  font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  color: var(--article-text-color, #1d1f25);
+  user-select: none;
+
+  --sr-accent: var(--link-color, #4c54d2);
+  --sr-muted: var(--summary-text-color, #62757e);
+  --sr-border: var(--vertical-delemiter-color, #c8cdd6);
+  --sr-hover: color-mix(in srgb, var(--link-color, #4c54d2) 14%, transparent);
+  --sr-active: color-mix(in srgb, var(--link-color, #4c54d2) 22%, transparent);
+}
+
+#speedreader-toolbar .sr-inner {
+  display: flex;
+  align-items: center;
+  width: 870px;
+  max-width: calc(100% - 24px);
+  height: 100%;
+  margin: 0 auto;
+  gap: 4px;
+}
+
+/* Icons rendered as recolorable masks (paths inherit currentColor). */
+#speedreader-toolbar .sr-ico {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  flex: none;
+}
+.sr-ico-characters { -webkit-mask-image: url(icons/characters.svg); mask-image: url(icons/characters.svg); }
+.sr-ico-headphones { -webkit-mask-image: url(icons/headphones.svg); mask-image: url(icons/headphones.svg); }
+.sr-ico-speedreader { -webkit-mask-image: url(icons/product-speedreader.svg); mask-image: url(icons/product-speedreader.svg); }
+.sr-ico-close { -webkit-mask-image: url(icons/close.svg); mask-image: url(icons/close.svg); }
+.sr-ico-fontsize { -webkit-mask-image: url(icons/font-size.svg); mask-image: url(icons/font-size.svg); }
+.sr-ico-minus { -webkit-mask-image: url(icons/minus.svg); mask-image: url(icons/minus.svg); }
+.sr-ico-plus { -webkit-mask-image: url(icons/plus-add.svg); mask-image: url(icons/plus-add.svg); }
+.sr-ico-sans { -webkit-mask-image: url(icons/readermode-sans.svg); mask-image: url(icons/readermode-sans.svg); }
+.sr-ico-serif { -webkit-mask-image: url(icons/readermode-serif.svg); mask-image: url(icons/readermode-serif.svg); }
+.sr-ico-mono { -webkit-mask-image: url(icons/readermode-mono.svg); mask-image: url(icons/readermode-mono.svg); }
+.sr-ico-dyslexic { -webkit-mask-image: url(icons/readermode-dislexyc.svg); mask-image: url(icons/readermode-dislexyc.svg); }
+.sr-ico-col-narrow { -webkit-mask-image: url(icons/readermode-column-default.svg); mask-image: url(icons/readermode-column-default.svg); }
+.sr-ico-col-wide { -webkit-mask-image: url(icons/readermode-column-wide.svg); mask-image: url(icons/readermode-column-wide.svg); }
+.sr-ico-rewind { -webkit-mask-image: url(icons/rewind-outline.svg); mask-image: url(icons/rewind-outline.svg); }
+.sr-ico-forward { -webkit-mask-image: url(icons/forward-outline.svg); mask-image: url(icons/forward-outline.svg); }
+.sr-ico-play { -webkit-mask-image: url(icons/play-outline.svg); mask-image: url(icons/play-outline.svg); }
+.sr-ico-pause { -webkit-mask-image: url(icons/pause-outline.svg); mask-image: url(icons/pause-outline.svg); }
+.sr-ico-speed { -webkit-mask-image: url(icons/font-size.svg); mask-image: url(icons/font-size.svg); }
+
+/* Left group of main buttons. */
+#speedreader-toolbar .sr-main {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+#speedreader-toolbar .sr-mbtn,
+#speedreader-toolbar .sr-close {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sr-muted);
+  cursor: pointer;
+}
+
+#speedreader-toolbar .sr-mbtn:hover,
+#speedreader-toolbar .sr-close:hover { background-color: var(--sr-hover); }
+
+#speedreader-toolbar .sr-mbtn.active {
+  background-color: var(--sr-active);
+  color: var(--sr-accent);
+}
+
+/* The flexible right region that holds either the caption or a control panel. */
+#speedreader-toolbar .sr-rest {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+}
+
+#speedreader-toolbar .sr-caption {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  letter-spacing: -0.08px;
+  color: var(--article-text-color, #1d1f25);
+}
+#speedreader-toolbar .sr-caption .sr-ico { color: var(--sr-muted); }
+
+/* Inline control panels (appearance / tts). */
+#speedreader-toolbar .sr-panel {
+  display: none;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+#speedreader-toolbar.show-appearance .sr-caption,
+#speedreader-toolbar.show-tts .sr-caption { display: none; }
+#speedreader-toolbar.show-appearance .sr-close,
+#speedreader-toolbar.show-tts .sr-close { display: none; }
+#speedreader-toolbar.show-appearance .sr-panel-appearance { display: flex; }
+#speedreader-toolbar.show-tts .sr-panel-tts { display: flex; }
+
+/* Theme chips. */
+#speedreader-toolbar .sr-themes { display: flex; align-items: center; gap: 8px; }
+#speedreader-toolbar .sr-chip {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--sr-border);
+  padding: 0;
+  cursor: pointer;
+}
+#speedreader-toolbar .sr-chip.is-light { background: #fff; }
+#speedreader-toolbar .sr-chip.is-sepia { background: #f2ebd9; }
+#speedreader-toolbar .sr-chip.is-dark { background: #000; }
+#speedreader-toolbar .sr-chip.is-system {
+  background: linear-gradient(90deg, #fff 50%, #000 50%);
+}
+#speedreader-toolbar .sr-chip.active::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid var(--sr-accent);
+}
+
+/* Grouped button rows (font family, column width, font size, speed). */
+#speedreader-toolbar .sr-group {
+  display: flex;
+  align-items: center;
+}
+#speedreader-toolbar .sr-gbtn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  color: var(--sr-muted);
+  cursor: pointer;
+  border: 1px solid var(--sr-border);
+  border-left-width: 0;
+}
+#speedreader-toolbar .sr-group > *:first-child { border-left-width: 1px; border-radius: 8px 0 0 8px; }
+#speedreader-toolbar .sr-group > *:last-child { border-radius: 0 8px 8px 0; }
+#speedreader-toolbar .sr-gbtn:hover { background-color: var(--sr-hover); }
+#speedreader-toolbar .sr-gbtn.active {
+  background-color: var(--sr-active);
+  color: var(--sr-accent);
+}
+#speedreader-toolbar .sr-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 72px;
+  height: 28px;
+  font-size: 12px;
+  color: var(--article-text-color, #1d1f25);
+  border: 1px solid var(--sr-border);
+  border-left-width: 0;
+}
+#speedreader-toolbar .sr-indicator .sr-ico { width: 16px; height: 16px; color: var(--sr-muted); }
+
+#speedreader-toolbar .sr-text-close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--sr-accent);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-family: inherit;
+}

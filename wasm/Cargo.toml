@@ -1,0 +1,18 @@
+[package]
+name = "speedreader-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "WASM wrapper around Brave's readability distiller for the SpeedReader extension"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+
+# Vendor Brave's crate with: make vendor-rust BRAVE_SRC=/path/to/brave-core
+readability = { path = "vendor-readability" }
+
+[profile.release]
+opt-level = "s"
+lto = true

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SpeedReader options</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 520px; margin: 40px auto; padding: 0 20px; color: #1d1f25; }
+    h1 { font-size: 20px; }
+    label { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.5; }
+    .hint { color: #6b7084; font-size: 13px; margin: 4px 0 0 26px; }
+    code { background: #f4f6f8; padding: 1px 5px; border-radius: 4px; }
+    .field { margin-top: 28px; }
+    .field > label { font-weight: 600; }
+    select { margin-top: 8px; font-size: 15px; padding: 5px 8px; }
+  </style>
+</head>
+<body>
+  <h1>SpeedReader</h1>
+  <label>
+    <input type="checkbox" id="auto">
+    <span>Automatically open readable articles in SpeedReader</span>
+  </label>
+  <p class="hint">When off, click the toolbar icon to distill a page. Press
+  <code>Esc</code> or the <em>Original</em> button to leave reader view.</p>
+
+  <div class="field">
+    <label for="engine">Distiller engine</label>
+    <div>
+      <select id="engine">
+        <option value="wasm">Brave (exact) — Brave's Rust distiller</option>
+        <option value="readability">Mozilla Readability — lighter</option>
+      </select>
+    </div>
+    <p class="hint">“Brave (exact)” gives byte-identical extraction to Brave.
+    “Mozilla Readability” is a plain-JavaScript distiller — close, but not
+    identical to Brave. The change applies the next time you open a page in
+    SpeedReader.</p>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

@@ -28,7 +28,7 @@ Then in Chrome:
 | Target | Does |
 |--------|------|
 | `make` / `make build` | Assemble `dist/` (copy sources, render icons, build WASM — fails if the WASM toolchain is missing) |
-| `make icons` | Render the action/toolbar PNGs from `src/icons/icon-source.svg` |
+| `make icons` | Resize the action/toolbar PNGs from `src/icons/icon-source.png` |
 | `make vendor-rust BRAVE_SRC=/path/to/brave-core` | Copy Brave's `readability` crate into `wasm/vendor-readability` |
 | `make wasm` | Compile Brave's distiller to WASM (needs `wasm-pack` + vendored crate) |
 | `make clean` | Remove `dist/` |

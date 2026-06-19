@@ -1,7 +1,7 @@
 # Speedreader extension — reproducible build.
 #
 #   make            Build dist/ (load ~/brave/speedreader/dist as an unpacked extension)
-#   make icons      Render action/toolbar PNGs from the SVG source
+#   make icons      Resize the action/toolbar PNGs from the icon-source.png master
 #   make wasm       Build the Rust distiller to WASM (needs wasm-pack)
 #   make vendor-rust BRAVE_SRC=/path/to/brave-core   Copy Brave's readability crate in
 #   make clean      Remove dist/
@@ -24,19 +24,20 @@ all: build
 build: clean
 	mkdir -p $(DIST)
 	cp -R $(SRC)/. $(DIST)/
-	rm -f $(DIST)/icons/icon-source.svg
+	rm -f $(DIST)/icons/icon-source.png
 	$(MAKE) icons
 	$(MAKE) wasm
 	@echo "✓ dist/ ready — load $(CURDIR)/$(DIST) as an unpacked extension"
 
-# Reproducibly render every icon size from the single SVG source.
+# Reproducibly resize every icon size from the single icon-source.png master.
 icons:
-	@command -v rsvg-convert >/dev/null || { echo "need rsvg-convert (brew install librsvg)"; exit 1; }
+	@command -v sips >/dev/null || { echo "need sips (ships with macOS)"; exit 1; }
 	@mkdir -p $(DIST)/icons
 	@for s in $(SIZES); do \
-	  rsvg-convert -w $$s -h $$s $(SRC)/icons/icon-source.svg -o $(DIST)/icons/icon$$s.png; \
+	  cp $(SRC)/icons/icon-source.png $(DIST)/icons/icon$$s.png; \
+	  sips -z $$s $$s $(DIST)/icons/icon$$s.png >/dev/null; \
 	done
-	@echo "✓ icons rendered ($(SIZES))"
+	@echo "✓ icons resized ($(SIZES))"
 
 # Compile Brave's Rust distiller to WASM and drop the glue into dist/vendor/wasm.
 # WASM is the ONLY distiller (no fallback) — byte-identical extraction to Brave is

@@ -1,4 +1,4 @@
-# SpeedReader extension — reproducible build.
+# Speedreader extension — reproducible build.
 #
 #   make            Build dist/ (load ~/brave/speedreader/dist as an unpacked extension)
 #   make icons      Render action/toolbar PNGs from the SVG source

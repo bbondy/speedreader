@@ -1,4 +1,4 @@
-/* SpeedReader toolbar — recreates Brave's native SpeedReader toolbar layout,
+/* Speedreader toolbar — recreates Brave's native Speedreader toolbar layout,
  * but (since it lives in the reader page, not browser chrome) it follows the
  * active article theme via the CSS variables reader.css sets on <html>. */
 

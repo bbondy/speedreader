@@ -1,4 +1,4 @@
-/* SpeedReader — lightweight per-tab detector.
+/* Speedreader — lightweight per-tab detector.
  *
  * This is the ONLY script injected into normal pages, so it is kept tiny to
  * minimise per-tab memory: it just checks whether the page looks like an

@@ -1,4 +1,4 @@
-/* SpeedReader — reader page.
+/* Speedreader — reader page.
  *
  * Runs at chrome-extension://…/reader.html?url=<original>. It fetches the
  * original HTML itself, distills it (Brave's Rust distiller via WASM when
@@ -100,7 +100,7 @@
     try {
       wasm = await loadWasm();
     } catch (e) {
-      throw new Error('The SpeedReader distiller (WASM) failed to load — run `make wasm`, ' +
+      throw new Error('The Speedreader distiller (WASM) failed to load — run `make wasm`, ' +
         'or switch the engine to Mozilla Readability in Options. ' + (e && e.message || e));
     }
     const out = wasm.distill(htmlText, url);
@@ -397,7 +397,7 @@
     }
   }
 
-  // ── Toolbar (recreates Brave's native SpeedReader toolbar) ───────────────────
+  // ── Toolbar (recreates Brave's native Speedreader toolbar) ───────────────────
   const ico = (name) => `<span class="sr-ico sr-ico-${name}"></span>`;
 
   function buildToolbar() {
@@ -523,7 +523,7 @@
   }
 
   function showMessage(title, message) {
-    document.title = 'SpeedReader';
+    document.title = 'Speedreader';
     document.body.replaceChildren();
     const box = document.createElement('div');
     box.id = 'article';
@@ -533,16 +533,16 @@
       (originalUrl ? `<p><a href="${originalUrl}">Go to the original page →</a></p>` : '');
     document.body.appendChild(box);
   }
-  const showError = (message) => showMessage('Couldn’t open this page in SpeedReader', message);
+  const showError = (message) => showMessage('Couldn’t open this page in Speedreader', message);
 
   // ── Boot ─────────────────────────────────────────────────────────────────────
   // Surface any failure on the page itself so it's never a blank screen.
   window.addEventListener('error', (e) => {
-    console.error('[SpeedReader] error', e.error || e.message);
+    console.error('[Speedreader] error', e.error || e.message);
     showError('JavaScript error: ' + (e.message || e.error));
   });
   window.addEventListener('unhandledrejection', (e) => {
-    console.error('[SpeedReader] unhandled rejection', e.reason);
+    console.error('[Speedreader] unhandled rejection', e.reason);
     showError('Error: ' + ((e.reason && e.reason.message) || e.reason));
   });
 
@@ -574,12 +574,12 @@
     let htmlText;
     try {
       const resp = await fetch(originalUrl);
-      console.log('[SpeedReader] fetch', resp.status, resp.headers.get('content-type'));
+      console.log('[Speedreader] fetch', resp.status, resp.headers.get('content-type'));
       if (!resp.ok) { showError(`Fetch returned HTTP ${resp.status}.`); return; }
       htmlText = await resp.text();
-      console.log('[SpeedReader] fetched', htmlText.length, 'chars');
+      console.log('[Speedreader] fetched', htmlText.length, 'chars');
     } catch (e) {
-      console.error('[SpeedReader] fetch failed', e);
+      console.error('[Speedreader] fetch failed', e);
       showError('The page could not be fetched: ' + (e && e.message || e));
       return;
     }
@@ -588,7 +588,7 @@
     try {
       result = await distill(htmlText, originalUrl);
     } catch (e) {
-      console.error('[SpeedReader] distill threw', e);
+      console.error('[Speedreader] distill threw', e);
       showError('Distillation failed: ' + (e && e.message || e));
       return;
     }
@@ -596,18 +596,18 @@
 
     document.body.replaceChildren();
     document.body.appendChild(result.root);
-    document.title = result.title || 'SpeedReader';
+    document.title = result.title || 'Speedreader';
 
     initShowOriginal();
     calculateReadtime();
     buildToolbar();
     tts = new TtsController();
     tts.init();
-    console.log('[SpeedReader] rendered:', result.title);
+    console.log('[Speedreader] rendered:', result.title);
   }
 
   boot().catch((err) => {
-    console.error('[SpeedReader] boot failed', err);
+    console.error('[Speedreader] boot failed', err);
     showError('Error: ' + (err && err.message || err));
   });
 })();

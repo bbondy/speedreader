@@ -1,4 +1,4 @@
-/* SpeedReader extension — service worker.
+/* Speedreader extension — service worker.
  *
  * Drives the Option-A architecture: instead of distilling in-page, it navigates
  * the tab to the in-extension reader page (reader.html?url=…). Because the
@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     chrome.action.setBadgeBackgroundColor({ tabId, color: '#5B5CF1' });
     chrome.action.setTitle({
       tabId,
-      title: msg.readable ? 'Open in SpeedReader' : 'SpeedReader (no article detected)'
+      title: msg.readable ? 'Open in Speedreader' : 'Speedreader (no article detected)'
     });
   }
 });

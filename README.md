@@ -1,6 +1,6 @@
-# SpeedReader (Chrome extension)
+# Speedreader (Chrome extension)
 
-A faithful recreation of Brave's **SpeedReader** reading experience as a
+A faithful recreation of Brave's **Speedreader** reading experience as a
 Manifest V3 Chrome extension.
 
 Unlike a typical reader-mode extension, this distills articles in a **dedicated
@@ -20,7 +20,7 @@ Then in Chrome:
 1. Open `chrome://extensions`
 2. Enable **Developer mode**
 3. **Load unpacked** → select the generated **`dist/`** folder
-4. Open an article and click the SpeedReader toolbar icon.
+4. Open an article and click the Speedreader toolbar icon.
    Right-click the icon → **Options** to enable automatic mode.
 
 ### Make targets
@@ -46,7 +46,7 @@ Makefile    reproducible build
 
 ## Using it
 
-- Click the toolbar icon to open the current article in SpeedReader.
+- Click the toolbar icon to open the current article in Speedreader.
 - The top toolbar (Brave's layout) controls text size, font family
   (Sans / Serif / Mono / OpenDyslexic), theme (Light / Sepia / Dark / System),
   column width, and read-aloud (TTS).

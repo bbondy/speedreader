@@ -2,7 +2,7 @@
 name = "speedreader-wasm"
 version = "0.1.0"
 edition = "2021"
-description = "WASM wrapper around Brave's readability distiller for the SpeedReader extension"
+description = "WASM wrapper around Brave's readability distiller for the Speedreader extension"
 
 [lib]
 crate-type = ["cdylib"]
